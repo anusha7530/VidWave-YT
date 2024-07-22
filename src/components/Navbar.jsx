@@ -20,7 +20,7 @@ const Navbar = () => {
 
   ];
   return (
-    <div className="flex fixed justify-between px-4 w-[100%] bg-white">
+    <div className="fixed top-0 flex justify-between px-4 w-[100%] bg-white">
       <div className="flex items-center text-2xl gap-2 ">
         <div onClick={() => setNav(!nav)} className="cursor-pointer md:hidden">
           <AiOutlineMenu size={30} />

@@ -1,12 +1,16 @@
 import React from 'react'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
+import Feed from './components/Feed'
 
 const App = () => {
   return (
-    <div className='flex flex-col gap-2'>
+    <div>
       <Navbar/>
+      <div className='flex mt-24'>
       <Sidebar/>
+      <Feed/>
+      </div>
     </div>
   )
 }

@@ -18,14 +18,12 @@ const Sidebar = () => {
     { icon: <MdHelp size={25} className="mr-4" />, text: "Help" },
   ];
   return (
-    <div className='w-[250px] py-20 hidden md:block overflow-y-scroll overflow-x-hidden h-[calc(100vh-4.625rem )]'>
-      <div className="flex gap-2 items-center p-2">
-        </div>
+    <div className='w-[250px] hidden md:block overflow-y-scroll overflow-x-hidden h-[calc(100vh-4.625rem )]'>
         <div>
-          <ul className="flex flex-col text-gray-800">
+          <ul className="flex flex-col text-gray-800 gap-3">
             {menuItems.map(({ icon, text }, index) => {
               return (
-                <div key={index} className="">
+                <div key={index}>
                   <li className="text-lg p-2 flex cursor-pointer rounded-lg mx-4 hover:bg-gray-400 hover:text-white">
                     {icon} {text}
                   </li>
