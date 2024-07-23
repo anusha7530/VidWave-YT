@@ -5,11 +5,7 @@ const ChatMessage = ({ item }) => {
   return (
     <div className="flex items-center">
       <div>
-        <Avatar
-          name={item.name} 
-          size={25}
-          round={true}
-        />
+        <Avatar name={item.name} size={25} round={true} />
       </div>
       <div className="flex items-center">
         <h1 className="ml-2 font-bold text-sm">{item.name}</h1>

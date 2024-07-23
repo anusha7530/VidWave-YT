@@ -10,6 +10,7 @@ import { LuSendHorizonal } from "react-icons/lu";
 import LiveChat from "./LiveChat";
 import { useDispatch } from "react-redux";
 import { setMessage } from "../utils/chatSlice";
+import { nFormatter, formatDate } from "../utils/helper";
 
 const Watch = () => {
   const [input, setInput] = useState("");
@@ -18,6 +19,12 @@ const Watch = () => {
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
   const dispatch = useDispatch();
+
+  const [expandedSection, setExpandedSection] = useState(false);
+
+  const toggleSection = () => {
+    setExpandedSection(!expandedSection);
+  };
 
   const getSingleVideo = async () => {
     try {
@@ -30,6 +37,10 @@ const Watch = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const conversion = (num) => {
+    return nFormatter(num);
   };
 
   const sendMessage = () => {
@@ -53,8 +64,65 @@ const Watch = () => {
             className="md:w-[800px] md:h-[400px] w-[400px] h-[200px] sm:w-[600px] sm:h-[300px]"
           ></iframe>
           <h1 className="font-bold mt-2 text-lg">
-          {singleVideo?.snippet?.title}
+            {singleVideo?.snippet?.title}
           </h1>
+
+          <div className="bg-white rounded-xl">
+            <div className="border-b">
+              <button
+                className="flex justify-between items-center w-full text-left"
+                onClick={() => toggleSection()}
+              >
+                <span className="text-gray-700 text-sm">
+                  {nFormatter(singleVideo?.statistics?.viewCount)} views,
+                  Published on {formatDate(singleVideo?.snippet?.publishedAt)}
+                  ...
+                </span>
+                <span className="text-2xl">{expandedSection ? "-" : "+"}</span>
+              </button>
+              {expandedSection && (
+                <div className="mt-2 text-gray-600">
+                  <div className="flex justify-around">
+                    <div className="flex flex-col">
+                      <span className="text-black font-semibold">
+                        {nFormatter(singleVideo?.statistics?.viewCount)}
+                      </span>
+                      <span>views</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-black font-semibold">
+                        {nFormatter(singleVideo?.statistics?.likeCount)}
+                      </span>
+                      <span>likes</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-black font-semibold">
+                        {nFormatter(singleVideo?.statistics?.commentCount)}
+                      </span>
+                      <span>comments</span>
+                    </div>
+                  </div>
+                  <div className="p-2 m-2">
+                    {(singleVideo?.snippet?.tags).map((item, index) => {
+                      return (
+                        <p
+                          className="bg-gray-200 p-1 m-1 rounded-lg inline-block text-black text-sm"
+                          key={index}
+                        >
+                          #{item}
+                        </p>
+                      );
+                    })}
+                  </div>
+
+                  <div className="border-2 p-3 rounded-lg border-gray-600">
+                    <p className="">{singleVideo?.snippet?.description}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="flex justify-between flex-col md:flex-row gap-4 m-2">
             <div className="flex justify-between gap-2">
               <div className="flex items-center justify-between">
@@ -73,6 +141,7 @@ const Watch = () => {
             </div>
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center cursor-pointer bg-gray-200 px-4 py-2 rounded-full">
+                {nFormatter(singleVideo?.statistics?.likeCount)}{" "}
                 <AiOutlineLike size="20px" className="mr-5" />
                 <AiOutlineDislike size="20px" />
               </div>
@@ -88,38 +157,45 @@ const Watch = () => {
           </div>
         </div>
         <div className="flex flex-col md:ml-8 gap-3">
-        {hideChat && <div className="w-[100%] border border-gray-300 rounded-lg h-fit p-4">
-          <div className="flex justify-between items-center">
-            <h1>Top Chat</h1>
-            <BsThreeDotsVertical />
-          </div>
-          <div className="overflow-y-auto h-[28rem] flex flex-col-reverse">
-            <LiveChat />
-          </div>
-
-          <div className="flex items-center justify-between border-t p-2">
-            <div className="flex items-center w-[90%]">
-              <div>
-                <Avatar
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ161puiFPsmuVYLfbaRPlAVo1qZJ80_BFgQQ&s"
-                  size={35}
-                  round={true}
-                />
+          {hideChat && (
+            <div className="w-[100%] border border-gray-300 rounded-lg h-fit p-4">
+              <div className="flex justify-between items-center">
+                <h1>Top Chat</h1>
+                <BsThreeDotsVertical />
               </div>
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="border-b border-gray-300 outline-none ml-2"
-                type="text"
-                placeholder="Send message..."
-              />
-              <div className="bg-gray-200 cursor-pointer p-2 rounded-full">
-                <LuSendHorizonal onClick={sendMessage} />
+              <div className="overflow-y-auto h-[28rem] flex flex-col-reverse">
+                <LiveChat />
+              </div>
+
+              <div className="flex items-center justify-between border-t p-2">
+                <div className="flex items-center w-[90%]">
+                  <div>
+                    <Avatar
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ161puiFPsmuVYLfbaRPlAVo1qZJ80_BFgQQ&s"
+                      size={35}
+                      round={true}
+                    />
+                  </div>
+                  <input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    className="border-b border-gray-300 outline-none ml-2"
+                    type="text"
+                    placeholder="Send message..."
+                  />
+                  <div className="bg-gray-200 cursor-pointer p-2 rounded-full">
+                    <LuSendHorizonal onClick={sendMessage} />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>}
-        <button className="w-full bg-gray-400 font-medium p-2 rounded-lg" onClick={() => setHideChat(!hideChat)}>{hideChat ? "Hide Live Chat" : "Show Live Chat"}</button>
+          )}
+          <button
+            className="w-full bg-gray-400 font-medium p-2 rounded-lg"
+            onClick={() => setHideChat(!hideChat)}
+          >
+            {hideChat ? "Hide Live Chat" : "Show Live Chat"}
+          </button>
         </div>
       </div>
     </div>

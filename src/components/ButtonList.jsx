@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {useDispatch} from "react-redux";
-import { setCategory } from '../utils/appSlice';
+import { useDispatch } from "react-redux";
+import { setCategory } from "../utils/appSlice";
 
 const buttons = [
   "All",
@@ -39,7 +39,9 @@ const ButtonList = () => {
             onClick={() => {
               videoByTag(item);
             }}
-            className={`${active === item ? "bg-slate-900 text-white" : "bg-gray-200"} px-4 font-medium py-1 rounded-lg`}
+            className={`${
+              active === item ? "bg-slate-900 text-white" : "bg-gray-200"
+            } px-4 font-medium py-1 rounded-lg`}
           >
             {item}
           </button>

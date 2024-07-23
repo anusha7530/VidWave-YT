@@ -31,7 +31,7 @@ const VideoCard = ({ item }) => {
       />
       <div>
         <div className="flex gap-2 mt-2">
-          <Avatar src={icon} size={40} round={true}/>
+          <Avatar src={icon} size={40} round={true} />
           <div className="">
             <h1 className="font-bold">{item.snippet.title}</h1>
             <p className="text-sm text-gray-700">{item.snippet.channelTitle}</p>

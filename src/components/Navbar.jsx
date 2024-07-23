@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IoIosNotifications } from "react-icons/io";
-import { FaWallet,FaMusic } from "react-icons/fa";
+import { FaWallet, FaMusic } from "react-icons/fa";
 import { MdHelp } from "react-icons/md";
 import { IoMdHome } from "react-icons/io";
 import { SiYoutubeshorts } from "react-icons/si";
@@ -81,26 +81,27 @@ const Navbar = () => {
             <FaSearch />
           </button>
           {suggestion && searchSuggestion.length !== 0 && (
-        <div className="absolute top-3 z-50 w-[30%] py-5 bg-white shadow-lg mt-14 rounded-lg border border-gray-200">
-          <ul>
-            {searchSuggestion.map((text, idx) => {
-              return (
-                <div className="flex items-center px-4 hover:bg-gray-100">
-                  <FaSearch size="14px" className="hidden md:block"/>
-                  <li onClick={() => setInput(`${text}`)} className="px-2 py-1 cursor-pointer text-md">
-                    {text}
-                  </li>
-                </div>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-
+            <div className="absolute top-3 z-50 w-[30%] py-5 bg-white shadow-lg mt-14 rounded-lg border border-gray-200">
+              <ul>
+                {searchSuggestion.map((text, idx) => {
+                  return (
+                    <div className="flex items-center px-4 hover:bg-gray-100">
+                      <FaSearch size="14px" className="hidden md:block" />
+                      <li
+                        onClick={() => setInput(`${text}`)}
+                        className="px-2 py-1 cursor-pointer text-md"
+                      >
+                        {text}
+                      </li>
+                    </div>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
-     
       <div className="text-2xl gap-4 text-gray-700 items-center  hidden md:flex">
         <IoIosNotifications className="cursor-pointer" />
         <FaInfoCircle className="cursor-pointer" />
